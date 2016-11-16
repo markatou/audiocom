@@ -27,7 +27,7 @@ def run(config):
     s = "active"
     now = datetime.datetime.now()
     while s == "active":
-        if (datetime.datetime.now() - now).total_seconds() > 10:
+        if (datetime.datetime.now() - now).total_seconds() > 5 + 10*random.random():
             print((datetime.datetime.now() - now).total_seconds())
             now = datetime.datetime.now()
             if s == "active":
