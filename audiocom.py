@@ -27,15 +27,15 @@ def run(config):
     s = "active"
     now = datetime.datetime.now()
     while s == "active":
-        if (datetime.datetime.now() - now).total_seconds() > 5:
+        if (datetime.datetime.now() - now).total_seconds() > 10:
             print((datetime.datetime.now() - now).total_seconds())
             now = datetime.datetime.now()
             if s == "active":
                 s = elect(config)
                 print((datetime.datetime.now() - now).total_seconds())
-                print("s = ACTIVE")
+                print("s =" + s)
             else:
-                print("s = INACTIVE")
+                print("s = " + s)
         
         
 
@@ -69,7 +69,6 @@ def elect(config):
 
         modulated_samples = util.add_arrays(sender.modulated_samples(), modulated_samples)
         baseband_samples = util.add_arrays(sender.bits_to_samples(src.payload), baseband_samples)
-        print("sending %d samples" % len(modulated_samples))
 
     # Create the channel
     if config.bypass:
@@ -84,6 +83,7 @@ def elect(config):
         samples_rx = channel.xmit(modulated_samples)
         print('Sent', len(samples_rx), 'samples')
     else:
+    
         samples_rx = channel.recv(modulated_samples)
         print('Received', len(samples_rx), 'samples')
 
@@ -103,7 +103,7 @@ def elect(config):
                 print("Received %d data bits" % len(received_payload))
                 if src.type == Source.TEXT:
                     print("Received text was:", sink.received_text)
-                    if (sink.received_text == "Mens et Manus"):
+                    if ((str(sink.received_text)) == "Mens et manus.\n"):
                         return "inactive"
  
                 if len(received_payload) > 0:
