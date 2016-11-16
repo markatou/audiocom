@@ -84,7 +84,7 @@ def elect(config):
         print('Sent', len(samples_rx), 'samples')
     else:
     
-        samples_rx = channel.recv(modulated_samples)
+        samples_rx = channel.recv(4*modulated_samples)
         print('Received', len(samples_rx), 'samples')
 
         for frequency in config.channels:
