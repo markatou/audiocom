@@ -8,6 +8,7 @@ import pyaudio
 import struct
 import sys
 
+
 from channel import Channel
 
 class AudioChannel(Channel):

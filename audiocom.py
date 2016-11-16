@@ -21,14 +21,22 @@ from receiver import Receiver
 from sender import Sender
 from sink import Sink
 from source import Source
-
+import datetime
 
 def run(config):
     s = "active"
-    for i in range(10):
-        if s == "active":
-            s = elect(config)
-        print(s)
+    now = datetime.datetime.now()
+    while s == "active":
+        if (datetime.datetime.now() - now).total_seconds() > 5:
+            print((datetime.datetime.now() - now).total_seconds())
+            now = datetime.datetime.now()
+            if s == "active":
+                s = elect(config)
+                print((datetime.datetime.now() - now).total_seconds())
+                print("s = ACTIVE")
+            else:
+                print("s = INACTIVE")
+        
         
 
 
