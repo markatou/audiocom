@@ -12,7 +12,7 @@ import sys
 import random
 import graphs
 import util
-
+import time
 from audio_channel import AudioChannel
 from abstract_channel import AbstractChannel
 from config import Config
@@ -30,7 +30,7 @@ def run(config):
     print("Listening for start signal...")
     start = False
     while not start:
-        start = listen(config, modulated_samples, channel, sources, "Mens et manus.\n")
+        start = listen(config, 20*modulated_samples, channel, sources, "Mens et manus.\n")
 
     print("Starting leader election")
 
@@ -58,6 +58,7 @@ def send_start(config):
     print("Sending start signal!!")
 
     for i in range(5):
+        time.sleep(5)
         send(config, modulated_samples, channel, sources)
 
 def makeChannel(config):
