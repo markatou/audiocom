@@ -53,8 +53,10 @@ def run(config):
             print("Round Number : <%d>" % (round_number))
             round_number += 1
 
+    received_message = received_message.replace("z", "")
+
     if active:
-        received_message  = "I_AM_THE_LEADER"
+        received_message  = "I_AM_THE_LEADER\n"
         print(received_message)
 
     file_name = "%s.csv" % (socket.gethostname())
@@ -136,7 +138,7 @@ def listen(config, modulated_samples, channel, sources, message):
 
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
-                if ((str(sink.received_text)) == message):
+                if message in (str(sink.received_text)):
                     return True, str(sink.received_text)
  
             if len(received_payload) > 0:

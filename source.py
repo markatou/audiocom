@@ -52,11 +52,16 @@ class Source:
     def get_bits(self, filename):
         '''Returns the bit representation of this file (ASCII encoding).'''
         bits = []
+
+        # Pad with 20 z's in front of message
+        for c in "z"*20:
+            bits.extend(self.int2bits(ord(c), 8))
+            
         if self.new_id:
             for c in str(self.new_id):
                 bits.extend(self.int2bits(ord(c), 8))
 
-        string = "%s" % (self.new_id)
+        string = "%s%s" % ("z"*20, self.new_id)
 
         with open(filename, 'r') as f:
             for line in f:
@@ -64,6 +69,11 @@ class Source:
                     bits.extend(self.int2bits(ord(c), 8))
                     string += c
 
+        # Pad with 20 z's in back of message
+        for c in "z"*20:
+            bits.extend(self.int2bits(ord(c), 8))
+
+        string += "z"*20
 
         print("String to send: %s" % (string))
         return bits
