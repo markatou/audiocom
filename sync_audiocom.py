@@ -118,7 +118,7 @@ def listen(config, modulated_samples, channel, sources, message):
     ''' Listen for message and return True if message was recieved. '''
 
     preamble = Preamble(config)
-    samples_rx = channel.recv(4*modulated_samples)
+    samples_rx = channel.recv(modulated_samples)
     print('Received', len(samples_rx), 'samples')
 
     for frequency in config.channels:
