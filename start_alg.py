@@ -1,28 +1,31 @@
-import os
+from config import Config  
 from socket import *
-import audiocom
 import argparse
-from config import Config
 
+host = ""
+port = 13000
+buf = 1024
 
-def startAlg(config):
-    host = ""
-    port = 13000
-    buf = 1024
+def start_alg(alg, config):
+    print("Listening for start signal...")
+    start = False
+
     addr = (host, port)
     UDPSock = socket(AF_INET, SOCK_DGRAM)
     UDPSock.bind(addr)
-    print("Waiting to receive messages...")
-    while True:
+    while not start:
         (data, addr) = UDPSock.recvfrom(buf)
-        print("Received message: " + str(data))
-        if data:
-            audiocom.run(config)
+        print("Received message", data)
+        if data == b"Start":
+            start = True
     UDPSock.close()
-    os._exit(0)
+
+    print('Calling alg')
+    alg(config)
 
 
-def start():
+if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
 
     # Source and Sink options
@@ -47,8 +50,8 @@ def start():
 
     # Modulation (signaling) and Demodulation options
     parser.add_argument("-k", "--keytype", type=str, default="on_off", help="keying (signaling) scheme")
-    parser.add_argument("-d", "--demod", type=str, default="envelope", help="demodulation scheme (envelope, het, quad)")
-    parser.add_argument("-f", "--filter", type=str, default="avg", help="filter type (avg)")
+    parser.add_argument("-d", "--demod", type=str, default="quad", help="demodulation scheme (envelope, het, quad)")
+    parser.add_argument("-f", "--filter", type=str, default="lp", help="filter type (avg)")
     parser.add_argument("-o", "--one", type=float, default=1.0, help="voltage level for bit 1")
     parser.add_argument("-z", "--zero", type=float, default=0.0, help="voltage level for bit 0 (ignored unless key type is custom)")
 
@@ -62,13 +65,19 @@ def start():
     parser.add_argument("-g", "--graph", type=str, choices=['time', 'freq', 'usr'], help="show graphs")
     parser.add_argument("--verbose", action="store_true", help="verbose debugging")
 
+    # Options for which algorithm to start
+    parser.add_argument('--log', action='store_true')
+    parser.add_argument('--sync', action='store_true')
+
     args = parser.parse_args()
+    args.file = ["testfiles/A"]
 
     config = Config(args)
-    print(config) # useful output
 
-    # Go!
-    startAlg(config)
+    if args.log:
+        import log_log
+        start_alg(log_log.run, config)
 
-
-start()
+    elif args.sync:
+        import sync_audiocom
+        start_alg(sync_audiocom.run, config)
