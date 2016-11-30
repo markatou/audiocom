@@ -78,7 +78,7 @@ def run(config):
         
 
 def test(k,modulated_samples, channel, sources, config, new_id):
-    print(k)
+    print("Assume " + str(k)+" number of nodes")
     if random.random() < 1.0/k:
         print("Send and Listen")
         return sendAndListen(config,modulated_samples,channel,sources, new_id)
