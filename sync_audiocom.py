@@ -63,7 +63,7 @@ def run(config):
         with open(file_name, 'w') as f:
             f.write("timestamp, last_round, id, last_received_message\n")
     
-    with open(socket.gethostname(), 'a') as f:
+    with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s\n" % (datetime.datetime.now(), round_number, node_id, received_message))
         
 
