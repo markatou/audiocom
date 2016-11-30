@@ -37,7 +37,7 @@ def run(config):
 
     modulated_samples, channel, sources  = makeChannel(config)
 
-    while active and round_number < 20:
+    while active and round_number < 8:
         # Round are ~10 seconds each
         if (datetime.datetime.now() - time).total_seconds() > 10:
             time = datetime.datetime.now()
@@ -54,17 +54,17 @@ def run(config):
             round_number += 1
 
     if active:
-        received_message  = "I AM THE LEADER"
+        received_message  = "I_AM_THE_LEADER"
         print(received_message)
 
     file_name = "%s.csv" % (socket.gethostname())
 
     if file_name not in os.listdir():
         with open(file_name, 'w') as f:
-            f.write("timestamp, last_round, id, last_received_message\n")
+            f.write("alg,timestamp,last_round,node_id,last_received_message\n")
     
     with open(file_name, 'a') as f:
-        f.write("%s,%s,%s,%s\n" % (datetime.datetime.now(), round_number, node_id, received_message))
+        f.write("%s,%s,%s,%s,%s" % ("sync", str(datetime.datetime.now()).replace(" ", "_"), round_number, node_id, received_message))
         
 
 def makeChannel(config):
