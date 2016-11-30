@@ -64,7 +64,7 @@ def run(config):
             f.write("timestamp, last_round, id, last_received_message\n")
     
     with open(socket.gethostname(), 'a') as f:
-        f.write("%s,%s,%s,%s\n", % (datetime.datetime.now(), round_number, node_id, received_message))
+        f.write("%s,%s,%s,%s\n" % (datetime.datetime.now(), round_number, node_id, received_message))
         
 
 def makeChannel(config):
