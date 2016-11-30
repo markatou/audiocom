@@ -23,10 +23,8 @@ from sink import Sink
 from source import Source
 import datetime
 
-from socket import *
-host = ""
-port = 13000
-buf = 1024
+import socket
+import os
 
 def run(config):
     print("Starting leader election")
@@ -34,6 +32,8 @@ def run(config):
     active = True
     round_number = 0
     time = datetime.datetime.now()
+
+    node_id = random.randint(1, 255)
 
     modulated_samples, channel, sources  = makeChannel(config)
 
@@ -46,14 +46,26 @@ def run(config):
                 send(config, modulated_samples, channel, sources)
             else:
                 print("Listening for message")
-                active = not listen(config, modulated_samples, channel, sources, "Mens et manus.\n")
+                res, received_message = listen(config, modulated_samples, channel, sources, "Mens et manus.\n")
+                active = not res
 
             print("Active ? : <%s>" % (active))
             print("Round Number : <%d>" % (round_number))
             round_number += 1
 
     if active:
-        print('I AM THE LEADER')
+        received_message  = "I AM THE LEADER"
+        print(received_message)
+
+    file_name = "%s.csv" % (socket_gethostname())
+
+    if file_name not in os.listdir():
+        with open(file_name, 'w') as f:
+            f.write("timestamp, last_round, id, last_received_message\n")
+    
+    with open(socket.gethostname(), 'a') as f:
+        f.write("%s,%s,%s,%s\n", % (datetime.datetime.now(), round_number, node_id, received_message))
+        
 
 def makeChannel(config):
     # Create the preamble to pre-pend to the transmission
@@ -125,7 +137,7 @@ def listen(config, modulated_samples, channel, sources, message):
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
                 if ((str(sink.received_text)) == message):
-                    return True
+                    return True, str(sink.received_text)
  
             if len(received_payload) > 0:
                 # Output BER
@@ -137,4 +149,4 @@ def listen(config, modulated_samples, channel, sources, message):
 
         except Exception as e:
             print(repr(e))
-    return False
+    return False, ""
