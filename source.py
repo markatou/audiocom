@@ -15,10 +15,13 @@ class Source:
     U = 3
     TEXT = 4
 
-    def __init__(self, config, channel_index):
+    def __init__(self, config, channel_index, new_id):
 
         self.type = config.src_type
         self.n_bits = config.n_bits
+        self.new_id = new_id
+
+        print("In Source -> new_id: %s" % (self.new_id))
 
         # Create the payload
         if config.filenames is None:
@@ -49,10 +52,20 @@ class Source:
     def get_bits(self, filename):
         '''Returns the bit representation of this file (ASCII encoding).'''
         bits = []
+        if self.new_id:
+            for c in str(self.new_id):
+                bits.extend(self.int2bits(ord(c), 8))
+
+        string = "%s" % (self.new_id)
+
         with open(filename, 'r') as f:
             for line in f:
                 for c in line:
                     bits.extend(self.int2bits(ord(c), 8))
+                    string += c
+
+
+        print("String to send: %s" % (string))
         return bits
 
     def int2bits(self, x, width): 

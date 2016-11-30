@@ -77,7 +77,7 @@ def makeChannel(config):
     sources = {}
     for i in range(len(config.channels)):
         frequency = config.channels[i]
-        source = Source(config, i)
+        source = Source(config, i, 0)
         print("Channel: %d Hz" % frequency)
         print("\n".join(["\t%s" % source]))
         sources[frequency] = source

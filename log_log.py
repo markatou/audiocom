@@ -26,7 +26,11 @@ import math
 
 def run(config):
     s = "active"
-    modulated_samples, channel, sources  = makeChannel(config)
+    new_id = random.randint(1, 255)
+
+    print("New_id: %s" % (new_id))
+
+    modulated_samples, channel, sources  = makeChannel(config, new_id)
     time = datetime.datetime.now()
     roundN = 0
     L = 0.0
@@ -41,7 +45,7 @@ def run(config):
             print("Round = " + str(roundN))
 
             i = math.ceil((U+L)/2.0)
-            t = test(2**i,modulated_samples, channel, sources, config)
+            t = test(2**i,modulated_samples, channel, sources, config, new_id)
             print( "t= " + str(t))
             if t == 1:
                 return "We're done!"
@@ -60,7 +64,7 @@ def run(config):
                 time = datetime.datetime.now()
                 roundN+=1
                 print("Round = " + str(roundN))
-                t = test(2**i,modulated_samples, channel, sources, config)
+                t = test(2**i,modulated_samples, channel, sources, config, new_id)
                 print( "t= " + str(t))
     else:
         while t != 1:
@@ -68,22 +72,22 @@ def run(config):
                 time = datetime.datetime.now()
                 roundN+=1
                 print("Round = " + str(roundN))
-                t = test(2**(2*i),modulated_samples, channel, sources, config)
+                t = test(2**(2*i),modulated_samples, channel, sources, config, new_id)
                 print( "t= " + str(t))
         
         
 
-def test(k,modulated_samples, channel, sources, config):
+def test(k,modulated_samples, channel, sources, config, new_id):
     print(k)
     if random.random() < 1.0/k:
         print("Send and Listen")
-        return sendAndListen(config,modulated_samples,channel,sources)
+        return sendAndListen(config,modulated_samples,channel,sources, new_id)
     else:
         print("Listen")
-        return listen(config,modulated_samples,channel,sources)
+        return listen(config,modulated_samples,channel,sources, new_id)
 
 
-def makeChannel(config):
+def makeChannel(config, new_id):
     # Create the preamble to pre-pend to the transmission
     preamble = Preamble(config)
 
@@ -91,7 +95,7 @@ def makeChannel(config):
     sources = {}
     for i in range(len(config.channels)):
         frequency = config.channels[i]
-        source = Source(config, i)
+        source = Source(config, i, new_id)
         print("Channel: %d Hz" % frequency)
         print("\n".join(["\t%s" % source]))
         sources[frequency] = source
@@ -119,7 +123,7 @@ def makeChannel(config):
     return modulated_samples, channel, sources
 
         
-def listen(config,modulated_samples,channel,sources):
+def listen(config,modulated_samples,channel,sources, new_id):
     preamble = Preamble(config)
     samples_rx = channel.recv(4*modulated_samples)
     print('Received', len(samples_rx), 'samples')
@@ -140,7 +144,7 @@ def listen(config,modulated_samples,channel,sources):
             print("Received %d data bits" % len(received_payload))
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
-                if ((str(sink.received_text)) == "Mens et manus.\n"):
+                if ((str(sink.received_text)) == "%sMens et manus.\n" % (new_id)):
                     return 1
 
             if len(received_payload) > 0:
@@ -161,7 +165,7 @@ def listen(config,modulated_samples,channel,sources):
     return "active"
         
     
-def sendAndListen(config,modulated_samples,channel,sources):
+def sendAndListen(config,modulated_samples,channel,sources, new_id):
     # Transmit and receive data on the channel.  The received samples
     # (samples_rx) have not been processed in any way.
     preamble = Preamble(config)
@@ -184,7 +188,7 @@ def sendAndListen(config,modulated_samples,channel,sources):
             print("Received %d data bits" % len(received_payload))
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
-                if ((str(sink.received_text)) == "Mens et manus.\n"):
+                if ((str(sink.received_text)) == "%sMens et manus.\n" % (new_id)):
                     return 1
                 else:
                     return "e"
