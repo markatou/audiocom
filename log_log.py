@@ -144,7 +144,7 @@ def listen(config,modulated_samples,channel,sources, new_id):
             print("Received %d data bits" % len(received_payload))
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
-                if ((str(sink.received_text)) == "%sMens et manus.\n" % (new_id)):
+                if "Mens et manus.\n" in str(sink.received_text) and not str(sink.received_text) == "%sMens et manus.\n" % (new_id):
                     return 1
 
             if len(received_payload) > 0:
@@ -188,7 +188,7 @@ def sendAndListen(config,modulated_samples,channel,sources, new_id):
             print("Received %d data bits" % len(received_payload))
             if src.type == Source.TEXT:
                 print("Received text was:", sink.received_text)
-                if ((str(sink.received_text)) == "%sMens et manus.\n" % (new_id)):
+                if "Mens et manus.\n" in str(sink.received_text) and not str(sink.received_text) == "%sMens et manus.\n" % (new_id):
                     return 1
                 else:
                     return "e"
