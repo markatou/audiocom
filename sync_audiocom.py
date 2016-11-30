@@ -57,7 +57,7 @@ def run(config):
         received_message  = "I AM THE LEADER"
         print(received_message)
 
-    file_name = "%s.csv" % (socket_gethostname())
+    file_name = "%s.csv" % (socket.gethostname())
 
     if file_name not in os.listdir():
         with open(file_name, 'w') as f:
