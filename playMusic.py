@@ -5,7 +5,7 @@ import wave
 
 def playM(filename):
     chunk = 1024
-    wf = wave.open('JazzTrio.wav', 'rb')
+    wf = wave.open(filename, 'rb')
     p = pyaudio.PyAudio()
 
     stream = p.open(
