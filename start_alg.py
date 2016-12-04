@@ -87,4 +87,4 @@ if __name__ == "__main__":
     
     elif args.music:
         import playMusic
-        start_alg(playMusic.playM, "SomebodyInstrumental.wav")
+        start_alg(playMusic.playM, "beatles_submarine/voix.wav")
