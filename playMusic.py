@@ -9,7 +9,7 @@ host = ""
 port = 13000
 buf = 1024
 
-def start_alg():
+def startMusic():
     print("Listening for start signal...")
     start = False
 
@@ -21,11 +21,21 @@ def start_alg():
         (data, addr) = UDPSock.recvfrom(buf)
         print("Received message", data)
         if data == b"voice":
-            filename = "beatles_submarine/voix.wav"
+            filename = "beatles_submarine/voice.wav"
+        if data == b"guitar":
+            filename = "beatles_submarine/guitar.wav"
+        if data == b"drums":
+            filename = "beatles_submarine/drums.wav"
+        if data == b"bass":
+            filename = "beatles_submarine/bass.wav"
+        if data == b"extra":
+            filename = "beatles_submarine/extra.wav"
+
+
     UDPSock.close()
 
     print('Calling alg')
-    start_alg(filename)
+    playM(filename)
 
 
 
