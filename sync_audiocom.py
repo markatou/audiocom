@@ -26,6 +26,10 @@ import datetime
 import socket
 import os
 
+IPs = ["128.31.35.110","128.31.36.219"]#, "","",""]
+
+music_parts = ["voice", "guitar", "bass", "drums", "extra"]
+
 def run(config):
     print("Starting leader election")
 
@@ -67,6 +71,25 @@ def run(config):
     
     with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s,%s" % ("sync", str(datetime.datetime.now()).replace(" ", "_"), round_number, node_id, received_message))
+
+    flag = True
+    if flag:
+        return
+
+    # Not leader
+    if not active:
+        import playMusic
+        playMusic.startMusic()
+        return
+
+    # Leader
+    port = 13000
+    for i in range(len(IPs)):
+        addr = (IPs[i], port)
+        UDPSock = socket(AF_INET, SOCK_DGRAM)
+        data = str.encode(mmusic_parts[i])
+        UDPSock.sendto(data, addr)
+        UDPSock.close()
         
 
 def makeChannel(config):
