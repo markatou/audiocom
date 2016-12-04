@@ -23,8 +23,7 @@ def start_alg(alg, config):
     UDPSock.close()
 
     print('Calling alg')
-    #alg(config)
-    playMusic.playM("Latin.wav")
+    alg(config)
 
 
 if __name__ == "__main__":
@@ -71,6 +70,7 @@ if __name__ == "__main__":
     # Options for which algorithm to start
     parser.add_argument('--log', action='store_true')
     parser.add_argument('--sync', action='store_true')
+    parser.add_argument('--music', action='store_true')
 
     args = parser.parse_args()
     args.file = ["testfiles/A"]
@@ -84,3 +84,7 @@ if __name__ == "__main__":
     elif args.sync:
         import sync_audiocom
         start_alg(sync_audiocom.run, config)
+    
+    elif args.music:
+        import playMusic
+        start_alg(playMusic.playM, "JazzTrio.wav")
