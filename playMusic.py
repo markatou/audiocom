@@ -30,7 +30,7 @@ def startMusic():
             filename = "beatles_submarine/bass.wav"
         if data == b"extra":
             filename = "beatles_submarine/extra.wav"
-
+        start = True
 
     UDPSock.close()
 

@@ -87,7 +87,7 @@ def run(config):
     for i in range(len(IPs)):
         addr = (IPs[i], port)
         UDPSock = socket(AF_INET, SOCK_DGRAM)
-        data = str.encode(mmusic_parts[i])
+        data = str.encode(music_parts[i])
         UDPSock.sendto(data, addr)
         UDPSock.close()
         
