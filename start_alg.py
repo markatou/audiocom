@@ -1,6 +1,8 @@
 from config import Config  
 from socket import *
 import argparse
+import playMusic
+
 
 host = ""
 port = 13000
@@ -21,7 +23,8 @@ def start_alg(alg, config):
     UDPSock.close()
 
     print('Calling alg')
-    alg(config)
+    #alg(config)
+    playMusic.playM("Latin.wav")
 
 
 if __name__ == "__main__":
