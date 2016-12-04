@@ -23,7 +23,7 @@ from sink import Sink
 from source import Source
 import datetime
 
-import socket
+from socket import * 
 import os
 
 IPs = ["128.31.35.110","128.31.36.219"]#, "","",""]
@@ -72,9 +72,9 @@ def run(config):
     with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s,%s" % ("sync", str(datetime.datetime.now()).replace(" ", "_"), round_number, node_id, received_message))
 
-    flag = True
-    if flag:
-        return
+    ##flag = True
+    ##if flag:
+    ##    return
 
     # Not leader
     if not active:
