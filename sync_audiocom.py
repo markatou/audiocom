@@ -26,7 +26,9 @@ import datetime
 from socket import * 
 import os
 
-IPs = ["128.31.35.110","128.31.36.219"]#, "","",""]
+IPs = ["18.62.23.44", "18.62.21.10", "18.62.23.37", "18.62.23.39",
+        "18.62.23.40", "18.62.23.41",
+        "18.62.23.42", "18.62.22.204", "18.62.30.74"]
 
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -41,7 +43,7 @@ def run(config):
 
     modulated_samples, channel, sources  = makeChannel(config)
 
-    while active and round_number < 4:
+    while active and round_number < 10:
         # Round are ~10 seconds each
         if (datetime.datetime.now() - time).total_seconds() > 10:
             time = datetime.datetime.now()
