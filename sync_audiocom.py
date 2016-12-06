@@ -26,7 +26,7 @@ import datetime
 from socket import * 
 import os
 
-IPs = ["18.62.23.44", "18.62.21.10", "18.62.23.37", "18.62.23.39",
+IPs = ["18.62.21.10", "18.62.23.37", "18.62.23.39",
         "18.62.23.40", "18.62.23.41",
         "18.62.23.42", "18.62.22.204", "18.62.30.74"]
 
@@ -86,7 +86,7 @@ def run(config):
 
     # Leader
     port = 13000
-    for i in range(len(IPs)):
+    for i in range(min(len(IPs),4)):
         addr = (IPs[i], port)
         UDPSock = socket(AF_INET, SOCK_DGRAM)
         data = str.encode(music_parts[i])

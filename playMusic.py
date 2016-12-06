@@ -22,15 +22,19 @@ def startMusic():
         print("Received message", data)
         if data == b"voice":
             filename = "beatles_submarine/voice.wav"
+            start = True
         if data == b"guitar":
+            start = True
             filename = "beatles_submarine/guitar.wav"
-        if data == b"drums":
+        if data == b"drums":            
+            start = True
             filename = "beatles_submarine/drums.wav"
         if data == b"bass":
             filename = "beatles_submarine/bass.wav"
+            start = True
         if data == b"extra":
             filename = "beatles_submarine/extra.wav"
-        start = True
+            start = True
 
     UDPSock.close()
 
