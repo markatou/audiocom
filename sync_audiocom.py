@@ -45,7 +45,7 @@ def run(config):
 
     while active and round_number < 10:
         # Round are ~10 seconds each
-        if (datetime.datetime.now() - time).total_seconds() > 10:
+        if (datetime.datetime.now() - time).total_seconds() > 15:
             time = datetime.datetime.now()
             if random.random() > 0.5:
                 print("Sending message")
