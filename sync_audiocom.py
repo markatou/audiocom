@@ -26,7 +26,7 @@ import datetime
 from socket import * 
 import os
 
-IPs = ["18.62.30.74", "18.62.21.10", "18.62.23.41"]
+IPs = ["18.111.49.49", "18.111.109.12"]
 
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -43,7 +43,7 @@ def run(config):
 
     while active and round_number < 10:
         # Round are ~10 seconds each
-        if (datetime.datetime.now() - time).total_seconds() > 20:
+        if (datetime.datetime.now() - time).total_seconds() > 15:
             time = datetime.datetime.now()
             if random.random() > 0.5:
                 print("Sending message")
@@ -72,9 +72,9 @@ def run(config):
     with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s,%s" % ("sync", str(datetime.datetime.now()).replace(" ", "_"), round_number, node_id, received_message))
 
-    ##flag = True
-    ##if flag:
-    ##    return
+    flag = True
+    if flag:
+        return
 
     # Not leader
     if not active:
