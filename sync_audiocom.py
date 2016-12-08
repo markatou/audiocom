@@ -41,7 +41,7 @@ def run(config):
 
     modulated_samples, channel, sources  = makeChannel(config)
 
-    while active and round_number < 2:
+    while active and round_number < 10:
         # Round are ~10 seconds each
         if (datetime.datetime.now() - time).total_seconds() > 20:
             time = datetime.datetime.now()
