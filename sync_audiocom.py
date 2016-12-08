@@ -37,8 +37,6 @@ def run(config):
     round_number = 0
     time = datetime.datetime.now()
 
-    node_id = random.randint(1, 255)
-
     modulated_samples, channel, sources  = makeChannel(config)
 
     while active and round_number < 10:
@@ -67,10 +65,10 @@ def run(config):
 
     if file_name not in os.listdir():
         with open(file_name, 'w') as f:
-            f.write("alg,timestamp,last_round,node_id,last_received_message\n")
+            f.write("timestamp,last_round,last_received_message\n")
     
     with open(file_name, 'a') as f:
-        f.write("%s,%s,%s,%s,%s" % ("sync", str(datetime.datetime.now()).replace(" ", "_"), round_number, node_id, received_message))
+        f.write("%s,%s,%s,%s,%s" % (str(datetime.datetime.now()).replace(" ", "_"), round_number, received_message))
 
     flag = True
     if flag:
