@@ -5,22 +5,22 @@ import playMusic
 
 
 host = ""
-port = 13000
+ports = [13000,15000]
 buf = 1024
 
 def start_alg(alg, config):
     print("Listening for start signal...")
     start = False
-
-    addr = (host, port)
-    UDPSock = socket(AF_INET, SOCK_DGRAM)
-    UDPSock.bind(addr)
-    while not start:
-        (data, addr) = UDPSock.recvfrom(buf)
-        print("Received message", data)
-        if data == b"Start":
-            start = True
-    UDPSock.close()
+    for port in ports:
+        addr = (host, port)
+        UDPSock = socket(AF_INET, SOCK_DGRAM)
+        UDPSock.bind(addr)
+        while not start:
+            (data, addr) = UDPSock.recvfrom(buf)
+            print("Received message", data)
+            if data == b"Start":
+                start = True
+        UDPSock.close()
 
     print('Calling alg')
     alg(config)
