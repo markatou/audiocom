@@ -43,9 +43,9 @@ def run(config):
 
     modulated_samples, channel, sources  = makeChannel(config)
 
-    while active and round_number < 10:
+    while active and round_number < 2:
         # Round are ~10 seconds each
-        if (datetime.datetime.now() - time).total_seconds() > 15:
+        if (datetime.datetime.now() - time).total_seconds() > 20:
             time = datetime.datetime.now()
             if random.random() > 0.5:
                 print("Sending message")
@@ -85,13 +85,14 @@ def run(config):
         return
 
     # Leader
-    port = 13000
+    ports = [13000,15000]
     for i in range(min(len(IPs),4)):
-        addr = (IPs[i], port)
-        UDPSock = socket(AF_INET, SOCK_DGRAM)
-        data = str.encode(music_parts[i])
-        UDPSock.sendto(data, addr)
-        UDPSock.close()
+        for port in ports:
+            addr = (IPs[i], port)
+            UDPSock = socket(AF_INET, SOCK_DGRAM)
+            data = str.encode(music_parts[i])
+            UDPSock.sendto(data, addr)
+            UDPSock.close()
         
 
 def makeChannel(config):

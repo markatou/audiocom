@@ -5,7 +5,7 @@ import playMusic
 
 
 host = ""
-ports = [13000,15000]
+ports = [15000]
 buf = 1024
 
 def start_alg(alg, config):
