@@ -26,8 +26,8 @@ import datetime
 from socket import * 
 import os
 
+num_nodes = 2
 IPs = ["18.111.49.49", "18.111.109.12"]
-
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
 def run(config):
@@ -65,10 +65,10 @@ def run(config):
 
     if file_name not in os.listdir():
         with open(file_name, 'w') as f:
-            f.write("timestamp,last_round,last_received_message\n")
+            f.write("num_nodes,timestamp,last_round,last_received_message\n")
     
     with open(file_name, 'a') as f:
-        f.write("%s,%s,%s,%s,%s" % (str(datetime.datetime.now()).replace(" ", "_"), round_number, received_message))
+        f.write("%s,%s,%s,%s" % (num_nodes, str(datetime.datetime.now()).replace(" ", "_"), round_number, received_message))
 
     flag = True
     if flag:
