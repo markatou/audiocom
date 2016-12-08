@@ -26,9 +26,7 @@ import datetime
 from socket import * 
 import os
 
-IPs = ["18.62.30.74", "18.62.21.10", "18.62.23.41", "18.62.23.39",
-        "18.62.23.40", "18.62.23.37",
-        "18.62.23.42", "18.62.22.204"]
+IPs = ["18.62.30.74", "18.62.21.10", "18.62.23.41"]
 
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -86,9 +84,9 @@ def run(config):
 
     # Leader
     ports = [13000,15000]
-    for i in range(min(len(IPs),4)):
-        for port in ports:
-            addr = (IPs[i], port)
+    for port in ports:
+        for i in range(len(IPs)):
+            addr = (IPs[i % 4], port)
             UDPSock = socket(AF_INET, SOCK_DGRAM)
             data = str.encode(music_parts[i])
             UDPSock.sendto(data, addr)
