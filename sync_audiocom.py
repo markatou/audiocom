@@ -96,6 +96,7 @@ def run(config):
         part = music_parts.pop()
         data = str.encode(part)
         UDPSock.sendto(data, addr)
+        UDPSock.close()
 
 def makeChannel(config):
     # Create the preamble to pre-pend to the transmission
