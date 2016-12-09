@@ -28,7 +28,7 @@ import os
 
 num_nodes = 6
 port = 15000
-IP = "18.111.49.49"
+IP = "18.111.109.12"
 ID = 3
 IPs = ["18.111.49.49", "18.111.109.12"]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
@@ -87,11 +87,15 @@ def run(config):
     ports = [11000, 13000,15000]
     i = len(IPs)*len(ports) 
     while i > 0:
+        print('i [%s], IP [%s], Port [%s]' % (i, IPs[i % len(IPs)], ports[i % len(ports)]))
         if IPs[i % len(IPs)] == IP and port == ports[i% len(ports)]:
+            i -= 1
             continue
         addr = (IPs[i%len(IPs)], ports[i% len(ports)])
         UDPSock = socket(AF_INET, SOCK_DGRAM)
-        data = str.encode(music_parts[i-1])
+        part = music_parts.pop()
+        data = str.encode(part)
+        print('Music_part: [%s]' % (part))
         UDPSock.sendto(data, addr)
         UDPSock.close()
         i -= 1
@@ -180,3 +184,5 @@ def listen(config, modulated_samples, channel, sources, message):
         except Exception as e:
             print(repr(e))
     return False, ""
+
+run('')
