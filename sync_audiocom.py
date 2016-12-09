@@ -26,7 +26,9 @@ import datetime
 from socket import * 
 import os
 
-num_nodes = 2
+num_nodes = 6
+port = 11000
+IP = "18.111.109.12"
 IPs = ["18.111.49.49", "18.111.109.12"]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -81,10 +83,12 @@ def run(config):
         return
 
     # Leader
-    ports = [13000,15000]
-    for port in ports:
+    ports = [11000, 13000,15000]
+    for p in ports:
         for i in range(len(IPs)):
-            addr = (IPs[i % 4], port)
+            if IPs[i] == IP and p == port:
+                continue
+            addr = (IPs[i], p)
             UDPSock = socket(AF_INET, SOCK_DGRAM)
             data = str.encode(music_parts[i])
             UDPSock.sendto(data, addr)
