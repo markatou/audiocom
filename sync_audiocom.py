@@ -27,9 +27,9 @@ from socket import *
 import os
 
 num_nodes = 6
-port = 15000
-IP = "18.111.49.49"
-ID = 3
+port = 11000
+IP = "18.111.109.12"
+ID = 1
 IPs = ["18.111.49.49", "18.111.109.12"]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
