@@ -27,8 +27,9 @@ from socket import *
 import os
 
 num_nodes = 6
-port = 11000
+port = 13000
 IP = "18.111.109.12"
+ID = 2
 IPs = ["18.111.49.49", "18.111.109.12"]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -63,7 +64,7 @@ def run(config):
         received_message  = "I_AM_THE_LEADER\n"
         print(received_message)
 
-    file_name = "%s.csv" % (gethostname())
+    file_name = "%s_%s.csv" % (gethostname(), ID)
 
     if file_name not in os.listdir():
         with open(file_name, 'w') as f:
