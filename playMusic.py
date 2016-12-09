@@ -10,7 +10,7 @@ port = 11000
 buf = 1024
 
 def startMusic():
-    print("Listening for start signal...")
+    print("Listening for music part...")
     start = False
 
     addr = (host, port)

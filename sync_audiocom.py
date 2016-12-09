@@ -42,6 +42,7 @@ def run(config):
     active = True
     round_number = 0
     time = datetime.datetime.now()
+    received_message = ""
 
     modulated_samples, channel, sources  = makeChannel(config)
 
