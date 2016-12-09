@@ -27,10 +27,13 @@ from socket import *
 import os
 
 num_nodes = 6
-port = 11000
-IP = "18.111.109.12"
+#FIXME port = 11000 
+#FIXME IP = "18.111.50.194" 
 ID = 1
-IPs = ["18.111.49.49", "18.111.109.12"]
+
+IP_ports = [("18.111.50.194", 11000), ("18.111.50.194", 13000), 
+            ("18.111.43.90", 11000), ("18.111.43.90", 13000),
+            ("18.111.51.183", 11000), ("18.189.16.43", 11000)]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
 def run(config):
@@ -84,22 +87,14 @@ def run(config):
         return
 
     # Leader
-    ports = [11000, 13000,15000]
-    i = len(IPs)*len(ports) 
-    while i > 0:
-        print('i [%s], IP [%s], Port [%s]' % (i, IPs[i % len(IPs)], ports[i % len(ports)]))
-        if IPs[i % len(IPs)] == IP and port == ports[i% len(ports)]:
-            i -= 1
+    for pair in IP_ports:
+        if pair[0] == IP and pair[1] == port:
             continue
-        addr = (IPs[i%len(IPs)], ports[i% len(ports)])
+        addr = (pair[0], pair[1]) 
         UDPSock = socket(AF_INET, SOCK_DGRAM)
         part = music_parts.pop()
         data = str.encode(part)
-        print('Music_part: [%s]' % (part))
         UDPSock.sendto(data, addr)
-        UDPSock.close()
-        i -= 1
-        
 
 def makeChannel(config):
     # Create the preamble to pre-pend to the transmission

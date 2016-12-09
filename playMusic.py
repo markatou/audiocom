@@ -6,7 +6,7 @@ from socket import *
 
 
 host = ""
-port = 13000
+port = 11000
 buf = 1024
 
 def startMusic():
@@ -40,10 +40,6 @@ def startMusic():
 
     print('Calling alg')
     playM(filename)
-
-
-
-
 
 def playM(filename):
     chunk = 1024
