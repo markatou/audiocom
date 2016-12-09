@@ -27,9 +27,9 @@ from socket import *
 import os
 
 num_nodes = 6
-port = 13000
-IP = "18.111.109.12"
-ID = 2
+port = 15000
+IP = "18.111.49.49"
+ID = 3
 IPs = ["18.111.49.49", "18.111.109.12"]
 music_parts = ["voice", "guitar", "bass", "drums", "extra"]
 
@@ -73,7 +73,7 @@ def run(config):
     with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s" % (num_nodes, str(datetime.datetime.now()).replace(" ", "_"), round_number, received_message))
 
-    flag = True
+    flag = False
     if flag:
         return
 
@@ -85,17 +85,16 @@ def run(config):
 
     # Leader
     ports = [11000, 13000,15000]
-    for p in ports:
-        i = len(IPs)
-        while i > 0:
-            if IPs[i] == IP and p == port:
-                continue
-            addr = (IPs[i], p)
-            UDPSock = socket(AF_INET, SOCK_DGRAM)
-            data = str.encode(music_parts[i])
-            UDPSock.sendto(data, addr)
-            UDPSock.close()
-            i -= 1
+    i = len(IPs)*len(ports) 
+    while i > 0:
+        if IPs[i % len(IPs)] == IP and port == ports[i% len(ports)]:
+            continue
+        addr = (IPs[i%len(IPs)], ports[i% len(ports)])
+        UDPSock = socket(AF_INET, SOCK_DGRAM)
+        data = str.encode(music_parts[i-1])
+        UDPSock.sendto(data, addr)
+        UDPSock.close()
+        i -= 1
         
 
 def makeChannel(config):
