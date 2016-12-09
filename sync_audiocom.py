@@ -28,13 +28,13 @@ import os
 
 num_nodes = 6
 #FIXME port = 11000 
-#FIXME IP = "18.111.50.194" 
+#FIXME IP = "18.62.21.200" 
 ID = 1
 
-IP_ports = [("18.111.50.194", 11000), ("18.111.50.194", 13000), 
-            ("18.111.50.194", 15000), ("18.111.43.90", 11000),
-            ("18.111.51.183", 11000), ("18.189.16.43", 11000)]
-music_parts = ["voice", "guitar", "bass", "drums", "extra"]
+IP_ports = [("18.62.21.200", 11000), ("18.62.28.133", 11000), 
+            ("18.62.23.61", 11000), ("18.62.23.62", 11000),
+            ("18.62.23.63", 11000)]
+music_parts = ["voice", "guitar", "bass", "drums"]# ], "extra"]
 
 def run(config):
     print("Starting leader election")
