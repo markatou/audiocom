@@ -86,7 +86,8 @@ def run(config):
     # Leader
     ports = [11000, 13000,15000]
     for p in ports:
-        for i in range(len(IPs)):
+        i = len(IPs)
+        while i > 0:
             if IPs[i] == IP and p == port:
                 continue
             addr = (IPs[i], p)
@@ -94,6 +95,7 @@ def run(config):
             data = str.encode(music_parts[i])
             UDPSock.sendto(data, addr)
             UDPSock.close()
+            i -= 1
         
 
 def makeChannel(config):
