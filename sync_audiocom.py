@@ -27,21 +27,21 @@ from socket import *
 import os
 
 num_nodes = 6
-#FIXME port = 11000 
-#FIXME IP = "18.62.21.200" 
+port = 11000 
+IP = "18.62.21.200" 
 ID = 1
 
 IP_ports = [("18.62.21.200", 11000), ("18.62.28.133", 11000), 
             ("18.62.23.61", 11000), ("18.62.23.62", 11000),
             ("18.62.23.63", 11000)]
-music_parts = ["voice", "guitar", "bass", "drums"]# ], "extra"]
+music_parts = ["voice", "guitar", "extra", "drums"]# ], "extra"]
 
 def run(config):
     print("Starting leader election")
 
     active = True
     round_number = 0
-    start_time = str(datetime.datetime.now()).split()[1].split('.')[0]
+    start_time = str(datetime.datetime.now()).split('.')[0]
     received_message = ""
 
     modulated_samples, channel, sources  = makeChannel(config)
@@ -78,7 +78,7 @@ def run(config):
     with open(file_name, 'a') as f:
         f.write("%s,%s,%s,%s" % (num_nodes, start_time, round_number, received_message))
 
-    flag = False
+    flag = True 
     if flag:
         return
 
