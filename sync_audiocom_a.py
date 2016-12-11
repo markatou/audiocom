@@ -38,7 +38,6 @@ music_parts = ["voice", "guitar", "extra", "drums"]# ], "extra"]
 
 def run(config):
     print("Starting leader election")
-    tim.sleep(1)
     active = True
     round_number = 0
     start_time = str(datetime.datetime.now()).split()[1].split('.')[0]
@@ -49,15 +48,15 @@ def run(config):
 
     while active and round_number < 8:
         # Round are ~10 seconds each
-        if (datetime.datetime.now() - time).total_seconds() > 10:
-            time = datetime.datetime.now()
-            if random.random() > 0.5:
-                print("Sending message")
-                send(config, modulated_samples, channel, sources)
-            else:
-                print("Listening for message")
-                res, received_message = listen(config, modulated_samples, channel, sources, "Mens et manus.\n")
-                active = not res
+        
+        time = datetime.datetime.now()
+        if random.random() > 0.5:
+            print("Sending message")
+            send(config, modulated_samples, channel, sources)
+        else:
+            print("Listening for message")
+            res, received_message = listen(config, modulated_samples, channel, sources, "Mens et manus.\n")
+            active = not res
 
             print("Active ? : <%s>" % (active))
             print("Round Number : <%d>" % (round_number))
